@@ -1,0 +1,6 @@
+{
+    "classifier_path": "./models/clause_bert.onnx",
+    "chunk_size": 250,
+    "policy": "Contract should attain to the italian law",
+    "llm": "qwen3.5:cloud"
+}

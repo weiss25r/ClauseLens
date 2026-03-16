@@ -24,8 +24,6 @@ class DocumentInspectorAgent:
         for paragraph, label in zip(chunks, labels):
             if label == 'Other':
                 continue
-            else:
-                print(label)
             messages = [
                 (
                     "system",
@@ -37,6 +35,5 @@ class DocumentInspectorAgent:
                 )
             ]
             output = self.llm.invoke(messages).content
-            print("Output")
             llm_output.append(output)
         return llm_output
