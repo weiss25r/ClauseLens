@@ -6,7 +6,6 @@ class ClauseClassifier:
     def __init__(self, model_path):
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.model = onnxruntime.InferenceSession(model_path)
-        
         self.classes = [
             'Cap On Liability',
             'Other', 
@@ -22,7 +21,7 @@ class ClauseClassifier:
 
     def run(self, chunks):
         predictions = []
-
+    
         for chunk in chunks:
             tokenized_chunk = self.tokenizer(
                 chunk,

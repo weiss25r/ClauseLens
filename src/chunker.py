@@ -1,15 +1,15 @@
 import nltk
 from pypdf import PdfReader
 import re
-from io import TextIOWrapper
+from typing import BinaryIO
 
 class DocumentChunker:
     def __init__(self):
         pass
 
-    def chunk_document(self, document_file, chunk_size: int, doc_type: str):
-        
-        nltk.download('punkt_tab')
+    def chunk_document(self, document_file: BinaryIO, chunk_size: int, doc_type: str):
+        #download sentence tokenizer
+        nltk.download('punkt_tab', quiet=True)
 
         if doc_type == "pdf":
             reader = PdfReader(document_file)
@@ -21,6 +21,7 @@ class DocumentChunker:
         else:
             raise Exception("Unsupported file format")
 
+        #creates chunks of fixed chunk size
         sentence_list = nltk.sent_tokenize(doc) 
         chunks = []
         chunk = ""
