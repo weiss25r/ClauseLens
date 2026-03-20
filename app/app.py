@@ -20,7 +20,7 @@ def analyze_document(file: UploadFile = File(...)):
     doctype = file.filename.split('.')[-1].lower()
     
     if doctype not in ["pdf", "txt"]:
-        raise HTTPException(status_code=400, detail="Formato non supportato. Usa PDF o TXT.")
+        raise HTTPException(status_code=400, detail="Unsupported file format: use pdf or txt files")
 
     try:
         output = clens.run(file.file, doctype)

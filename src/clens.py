@@ -13,7 +13,6 @@ class ClauseLens:
     def run(self, document_file, document_type):
         
         #clause lens pipeline: chunking -> clause classification -> agent -> json
-
         chunker = DocumentChunker()
         chunks = chunker.chunk_document(document_file, self.chunk_size, document_type)
 
