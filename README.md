@@ -22,6 +22,26 @@ Alternatively, you can use the CLI by running:
 ```bash
 python main.py -f path_input_document -o path_output_json
 ```
+
+## Project Structure
+```text
+├── app
+│   └── app.py              #FastAPI endpoint
+├── configs/    
+│   └── config.json.        #JSON system config file          
+├── src/                    # Core source code
+│   ├── agent.py            # Langchain and Ollama integration
+│   ├── chunker.py          # Document Chunker
+│   ├── classifier.py       # ONNX classifier inference
+│   └── clens.py            # System pipeline
+├── .gitattributes
+├── .gitignore
+├── LICENSE
+└── main.py                 # CLI interface
+└── README.md
+└── requirements.txt
+```
+
 ## System overview
 ClauseLens uses the ClauseBERT classifier and a open-source LLM via Ollama. A document, in PDF or TXT format, is first read and divided into **chunks** of fixed size. Chunk size is an hyperparameter of the system, balancing the trade off between speed and accuracy, and can be specified in the config file.
 
@@ -52,24 +72,7 @@ flowchart LR
     chunks --> ollama[Ollama LLM]
     ollama --> JSON 
 ```
-## Project Structure
-```text
-├── app
-│   └── app.py              #FastAPI endpoint
-├── configs/    
-│   └── config.json.        #JSON system config file          
-├── src/                    # Core source code
-│   ├── agent.py            # Langchain and Ollama integration
-│   ├── chunker.py          # Document Chunker
-│   ├── classifier.py       # ONNX classifier inference
-│   └── clens.py            # System pipeline
-├── .gitattributes
-├── .gitignore
-├── LICENSE
-└── main.py                 # CLI interface
-└── README.md
-└── requirements.txt
-```
+
 ## Acknowledgments
 All rights belong to the authors of the [Contract Understanding Atticus Dataset](https://huggingface.co/datasets/theatticusproject/cuad/tree/main/CUAD_v1$0). The dataset is licensed by a CC-BY 4.0 license.
 
