@@ -61,9 +61,10 @@ The chart belows illustrated the pipeline.
 flowchart LR
     input[📝 Input Legal Document] --> chunker
     config[Config File] --> chunker
+
+    subgraph System Pipeline
     chunker[Document Cunker] --> chunks
 
-    subgraph Chunking and Classification
         chunks[Chunks]--> classifier
         classifier[CLause BERT] --> labels
         labels[Labels] --> ollama
