@@ -13,13 +13,15 @@ class ClauseLens:
     def run(self, document_file, document_type):
         
         #clause lens pipeline: chunking -> clause classification -> agent -> json
+        
         chunker = DocumentChunker()
         chunks = chunker.chunk_document(document_file, self.chunk_size, document_type)
 
         classifier = ClauseClassifier(self.classifier_path)
         predictions = classifier.run(chunks)
+
         agent = DocumentInspectorAgent(self.model_name, self.policy)
         output = agent.run(chunks, predictions)
 
-        json_output = {"output": [json.loads(output[i]) for i in range(len(output))]}
+        json_output = {"output": [json.dumps(output[i]) for i in range(len(output))]}
         return json_output
