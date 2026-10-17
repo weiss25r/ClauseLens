@@ -1,4 +1,6 @@
 from langchain_ollama.chat_models import ChatOllama
+from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.prompts import ChatPromptTemplate
 
 class DocumentInspectorAgent:
     def __init__(self, model_name: str, policy:str):
@@ -7,16 +9,25 @@ class DocumentInspectorAgent:
         If the paragraph is not compliant, you will provide a reason for the non-compliance and rewrite the paragraph according to the policy.
         Otherwise, you will say that the paragraph is compliant. Your output should be a JSON with keys: paragraph, reason, corrections."""
 
-        prompt_template = """
+        human_prompt = """
         Input Paragraph: {paragraph}
         Paragraph label: {label}
         Policy: {policy}
         """
 
-        self.system_prompt = system_prompt
-        self.prompt_template = prompt_template
+        prompt = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("human", human_prompt)
+        ])
+
+
+        print(model_name)
         self.llm = ChatOllama(model=model_name, format='json')
         self.policy = policy
+        self.parser = JsonOutputParser()
+
+        self.chain = prompt | self.llm | self.parser
+
 
     def run(self, chunks, labels):
         llm_output = []
@@ -24,16 +35,14 @@ class DocumentInspectorAgent:
         for paragraph, label in zip(chunks, labels):
             if label == 'Other':
                 continue
-            messages = [
-                (
-                    "system",
-                    self.system_prompt
-                ),
-                (
-                    "human",
-                    self.prompt_template.format(paragraph=paragraph, label=label, policy=self.policy)
-                )
-            ]
-            output = self.llm.invoke(messages).content
+
+            output = self.chain.invoke(
+                {
+                    "paragraph": paragraph,
+                    "label": label,
+                    "policy": self.policy
+                }
+            )
+
             llm_output.append(output)
         return llm_output
