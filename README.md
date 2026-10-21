@@ -51,7 +51,7 @@ Chunks are then classified by ClauseBERT in one of 10 possible categories (9 leg
 
 Each chunk of legal category is then passed to the LLM, which outputs a JSON containing a list in which each element has the following keys:
 - paragraph;
-- reasons; where the LLM explains wether and why the paragraph is compliant with its policy;
+- reasons; where the LLM explains whether and why the paragraph is compliant with its policy;
 - corrections, where the model provides the rewritten, policy-compliant paragraph;
 
 **The LLM performs the task zero-shot**.
