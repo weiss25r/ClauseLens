@@ -59,7 +59,7 @@ Each chunk of legal category is then passed to the LLM, which outputs a JSON con
 The chart belows illustrated the pipeline.
 ```mermaid 
 flowchart LR
-    input[📝 Input Legal Document] --> chunker
+    input[Input Legal Document] --> chunker
     config[Config File] --> chunker
 
     subgraph System Pipeline
